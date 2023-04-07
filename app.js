@@ -1,67 +1,99 @@
-class Game {
-
+class MemoryCardsGame {
     constructor(settings) {
         this.settings = settings;
+        this.cards = [];
     }
 
     startGame() {
-        let cardContainer = document.querySelector('.card-container');
+        this.createCards();
+        this.randomizeCardsOrder();
+        this.renderCardsDOM();
+        this.handleUserClickEvents();
+    }
 
-        // let cardCount = 16;
-        // let idNumber = Math.random() * this.settings.cardLength / 2;
-
-        let cards = [];
+    createCards() {
         let colors = ['blue', 'pink', 'yellow', 'brown', 'green', 'orange', 'purple', 'red'];
         let counter = 0;
-       
-        //Instantiations des cards
+
         for (let i = 0; i < this.settings.cardLength; i++){
             let card = document.createElement('div');
             card.classList.add('card');
-            cards.push(card);
+            card.id = i;
+            this.cards.push(card);
 
             //Creation des pairs 
             if (i % 2 === 0 ) {
                 counter++;
             }
-            cards[i].dataset.id = counter;
-            cards[i].style.backgroundColor = colors[counter - 1];
-        }
 
-        //randomization
-        for (let i = 0; i < cards.length; i++) {
+            this.cards[i].dataset.id = counter;
+            this.cards[i].style.backgroundColor = colors[counter - 1];
+        }
+    }
+
+    randomizeCardsOrder() {
+        for (let i = 0; i < this.cards.length; i++) {
             let randomNum = Math.floor(Math.random() * 15);
-            const temp = cards[i];
+            const temp = this.cards[i];
 
-            cards[i] = cards[randomNum];
-            cards[randomNum] = temp;
+            this.cards[i] = this.cards[randomNum];
+            this.cards[randomNum] = temp;
         }
-        //Render cards on the DOM
-        for (let i = 0; i < cards.length; i++){
-            cardContainer.appendChild(cards[i]);
-            cards[i].classList.add('card-hidden');
+    }
+
+    renderCardsDOM() {
+        for (let i = 0; i < this.cards.length; i++){
+            document.querySelector('.card-container').appendChild(this.cards[i]);
+            this.cards[i].classList.add('card-hidden');
         }
+    }
 
-
-        // let card = document.querySelectorAll('.card')
-
-        // for (let i = 0; i < cards; i++){
-        //     card.addEventListener('click', (e) => {
-        //                 console.log('e.target.id')
-        //             })
-        // }
-
-        // let removedCard = 0;
-        let isItPair = [];
-        let totalCard = [];
-
-        cards.forEach((card) => 
-            card.addEventListener('click', (e) => {
+    handleUserClickEvents() {
+        let firstClickedCard = null;
+        let isClickable = true;
+        this.cards.forEach((card) => 
+            card.addEventListener('click', () => {
+                if(!isClickable) return;
 
                 card.classList.remove('card-hidden');
 
-                isItPair.push(card);
-                totalCard.push(card);
+                if (!firstClickedCard) {
+                    firstClickedCard = card;
+                    return;
+                }
+
+                if(firstClickedCard.id === card.id) {
+                    console.log('Même carte cliquée, veuillez cliquez sur une autre carte');
+                    return;
+                }
+
+                if (firstClickedCard.dataset.id === card.dataset.id) {
+                    firstClickedCard = null;
+                } else {
+                    isClickable = false;
+                    setTimeout(() => {
+                        firstClickedCard.classList.add('card-hidden');
+                        card.classList.add('card-hidden');
+                        isClickable = true;
+                        firstClickedCard = null;
+                    }, 1000);
+                }
+            })
+        );
+    }
+}
+
+let memoryCardsGame = new MemoryCardsGame(
+    {
+        cardLength : 16
+    }
+)
+
+memoryCardsGame.startGame();
+
+/**
+isItPair.push(card);
+                // totalCard.push(card);
                 console.log(isItPair.indexOf(e.target));
                 
 
@@ -104,39 +136,4 @@ class Game {
                         }
                 // }
 
-                
-               
-                
-                
-               
-                // console.log(e.target.classList.contains('card-hidden'))
-                // console.log(isItPair.length)
-                // console.log(isItPair)
-                // console.log(card.dataset.id)
-            })
-        );
-        // console.log(isItPair.length)
-        console.log(isItPair)
-        
-        // setTimeout(() => {
-        //     console.log(isItPair[0].dataset.id)
-        //     console.log(isItPair[1].dataset.id);
-        //               }, 5000);
-        
-        
-        // console.log(card[4])
-
-
-
-
-
-    }
-}
-
-let game = new Game(
-    {
-        cardLength : 16
-    }
-)
-
-game.startGame();
+*/
