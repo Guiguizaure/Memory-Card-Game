@@ -4,43 +4,61 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/31305a7ee5.js" crossorigin="anonymous"></script>
 
     <title>Memory Card Game</title>
 </head>
 <body>
-    <div class="card-container">
+    <div class="container">
 
-<!--         
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
+        <header id="#header">
+            <h1><span class="majuscule">M</span>emory 
+                <span class="majuscule">C</span>ard 
+                <span class="majuscule">G</span>ame
+            </h1>
+        </header>
 
+        <div class="button-container">
+            <button id="start">START</button>
+        </div>
 
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
+        <div class="end-game-modal">
+            <h2>You won !</h2>
+            <div class="game-time"></div>
+        </div>
 
+        <div class="leaderboard-container">
+            <div class="leaderboard">
+                <h3>Leader Board</h3>
+                <ol class="scores">
+                    <!-- <li class="current-best-score">
+                        <p>this time</p>
+                    </li> -->
+                </ol>
+            </div>  
+            
+        </div>
 
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
+        <div class="timer-container"></div>
 
+        <div class="card-container">
+            <div class="card-container-border"></div>
+        </div>
 
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div> -->
-        
-        
+      
+
+        <div class="restart-btn-container"></div>
+
     </div>
 
-
-    <script src="app.js"></script>
+    <script src="src/app.js" type="module"></script>
     
 </body>
 </html>
