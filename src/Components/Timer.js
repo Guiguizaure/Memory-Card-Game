@@ -11,13 +11,13 @@ export default class Timer {
     }
 
     timerIntervalHandler() {
-        this.timerContainer.textContent = this.getFormattedTimer()
+        this.timerContainer.textContent = Timer.getFormattedTimer(this.timerCount)
         this.timerCount++;
     }
 
-    getFormattedTimer() {
-        let secondes = this.timerCount % 60;
-        let minutes = Math.floor(this.timerCount / 60);
+    static getFormattedTimer(timerCount) {
+        let secondes = timerCount % 60;
+        let minutes = Math.floor(timerCount / 60);
 
         const timerHtml = (minutes <= 9 ? '0' : '') + minutes + ' : ' + (secondes <= 9 ? '0' : '') + secondes;
 

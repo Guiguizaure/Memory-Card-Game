@@ -2,16 +2,15 @@ import Timer from "./Timer.js";
 import Leaderboard from "./Learderboard.js";
 
 export default class MemoryCardsGame {
-    constructor(settings) {
+    constructor(leaderboard, settings) {
+        this.leaderboard = leaderboard;
+        this.settings = settings;
         this.cardsContainer = document.querySelector('.card-container');
         this.timerContainer = document.querySelector('.timer-container');
-        this.leaderBoardContainer = document.querySelector('.leaderboard-container');
         this.endGameModalContainer = document.querySelector('.end-game-modal');
-        this.settings = settings;
         this.cards = [];
         this.turnedCards = [];
         this.timer = new Timer(this.timerContainer)
-        this.leaderboard = new Leaderboard(this.leaderBoardContainer);
     }
 
     startGame() {
@@ -20,6 +19,7 @@ export default class MemoryCardsGame {
         this.renderCardsDOM();
         this.handleUserClickEvents();
         this.timer.startTimer();
+        
     }
 
     createCards() {
@@ -113,7 +113,7 @@ export default class MemoryCardsGame {
         this.timer.clearTimer();
         this.timerContainer.innerHTML = '';
 
-        let timeScoreHtml = "you did it in " + this.timer.getFormattedTimer() + "s";
+        let timeScoreHtml = "you did it in " + Timer.getFormattedTimer(this.timer.timerCount) + "s";
         document.querySelector('.game-time').textContent = timeScoreHtml;
 
         this.handleRestart();
@@ -129,9 +129,10 @@ export default class MemoryCardsGame {
         restartBtn.addEventListener("click", () => {
             this.cardsContainer.style.visibility = "visible";
             this.cardsContainer.style.display = "flex";
-            this.leaderBoardContainer.style.display = "none";
+            this.leaderboard.leaderboardContainer.style.display = "none";
             this.endGameModalContainer.style.display = "none";
             let memoryCardsGame = new MemoryCardsGame(
+                this.leaderboard,
                 {
                     cardLength : 16
                 }
@@ -143,9 +144,12 @@ export default class MemoryCardsGame {
 
     storeScore() {
         //When all cards have been turned : disply the leaderboard
-        this.leaderboard.leaderBoardContainer.style.display = "block";
+        this.leaderboard.leaderboardContainer.style.display = "block";
 
-        this.leaderboard.addNewTime(this.timer.getFormattedTimer());
+        this.leaderboard.addNewScore(this.timer.timerCount);
+
+        this.leaderboard.renderScores();
+
     }
 
 } //End of Memory card game class
