@@ -23,7 +23,6 @@ export default class MemoryCardsGame {
     }
 
     createCards() {
-        let colors = ['#2B59C3', '#D36582', '#B7CE63', '#c9a690', '#8FB339', '#FFEECF', '#B98389', '#DF2935'];
         let counter = 0;
 
         for (let i = 0; i < this.settings.cardLength; i++){
@@ -38,7 +37,7 @@ export default class MemoryCardsGame {
             }
 
             this.cards[i].dataset.id = counter;
-            this.cards[i].style.backgroundColor = colors[counter - 1];
+            this.cards[i].style.backgroundColor = this.settings.colorScheme[counter - 1];
         }
     }
 
@@ -120,6 +119,9 @@ export default class MemoryCardsGame {
     }
 
     handleRestart() {
+        const easySettingBtn = document.querySelector("#easy-setting");
+        const difficultSettingBtn = document.querySelector("#hard-setting");
+        const difficultyButtonsContainer = document.querySelector(".difficulty-button-container");
         let restartBtn = document.createElement('button');
         restartBtn.classList.add('restart-btn');
         restartBtn.innerHTML = "<i class='fa-solid fa-arrow-rotate-left'></i>";
@@ -127,18 +129,21 @@ export default class MemoryCardsGame {
         
         //On ajoute un click event au bouton restart pour réinitialiser le jeu
         restartBtn.addEventListener("click", () => {
-            this.cardsContainer.style.visibility = "visible";
-            this.cardsContainer.style.display = "flex";
+            // this.cardsContainer.style.visibility = "visible";
+            // this.cardsContainer.style.display = "flex";
             this.leaderboard.leaderboardContainer.style.display = "none";
             this.endGameModalContainer.style.display = "none";
-            let memoryCardsGame = new MemoryCardsGame(
-                this.leaderboard,
-                {
-                    cardLength : 16
-                }
-            )
-            memoryCardsGame.startGame();
+            // let memoryCardsGame = new MemoryCardsGame(
+            //     this.leaderboard,
+            //     {
+            //         cardLength : 16
+            //     }
+            // )
+            // memoryCardsGame.startGame();
             restartBtn.remove();
+            easySettingBtn.style.display = "block";
+            difficultSettingBtn.style.display = "block";
+            difficultyButtonsContainer.style.display = "flex";
         }); 
     }
 

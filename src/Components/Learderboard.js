@@ -3,7 +3,6 @@ import Timer from "./Timer.js";
 export default class Leaderboard {
     constructor(leaderboardContainer) {
         this.leaderboardContainer = leaderboardContainer;
-        // this.renderScores();
     }
 
     addNewScore(newScore) {
